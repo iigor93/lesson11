@@ -15,26 +15,25 @@ def index_view():
 @app.route('/candidate/')
 def candidate_empty():
     """Страница кандидата без номера"""
-    return 'Выберете номер кандидата'
+    return 'Введите номер кандидата в адресную строку, например /candidate/3'
 
 
 @app.route('/candidate/<string>')
 def candidate_string(string):
     """Страница кандидата с набором симовлов"""
-    return f'Выберете номер кандидата, а не строку {string}'
+    return f'Введите номер кандидата, а не строку {string}'
 
 
 @app.route('/candidate/<int:uid>/')
 def candidate(uid):
     """Страница кандидата"""
-    candidate_num = utils.get_len()
-    if uid not in candidate_num:
-        return ('нет кандидата с таким номером')
     candidate_data = utils.get_candidate(uid)
+    if candidate_data is False:
+        return 'нет кандидата с таким номером'
     return render_template('single.html', candidate_data=candidate_data)
 
 
-@app.route(('/search/'))
+@app.route('/search/')
 def candidate_empty_search():
     """ Если имя пустое"""
     return 'Введите имя кандидата'
@@ -50,7 +49,7 @@ def candidate_search_by_name(string):
     return render_template('search.html', candidate_data=candidate_data, search_num=list_len)
 
 
-@app.route(('/skill/'))
+@app.route('/skill/')
 def candidate_skill_empty_search():
     """ Если навык пустое"""
     return 'Введите навык'
@@ -63,4 +62,4 @@ def candidate_search_by_skill(string):
     if len(candidate_data) == 0:
         return "Нет кандидатов с таким Навыком"
     list_len = len(candidate_data)
-    return render_template('skill.html', candidate_data=candidate_data, search_num=list_len)
+    return render_template('skill.html', candidate_data=candidate_data, search_num=list_len, skill=string.title())

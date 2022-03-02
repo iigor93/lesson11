@@ -9,15 +9,6 @@ def get_data_from_file():
     return file_data
 
 
-def get_len():
-    """Номера кандидатов"""
-    file_data = get_data_from_file()
-    num_list = []
-    for item in file_data:
-        num_list.append(item['id'])
-    return num_list
-
-
 def load_candidates_from_json():
     """возвращает список всех кандидатов"""
     file_data = get_data_from_file()
@@ -30,7 +21,7 @@ def get_candidate(candidate_id):
     for candidate in file_data:
         if candidate_id == candidate['id']:
             return candidate
-    return 'Нет кандидата с таким номером'
+    return False
 
 
 def get_candidates_by_name(candidate_name):
